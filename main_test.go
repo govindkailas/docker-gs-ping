@@ -58,7 +58,7 @@ func TestRespondsWithLove(t *testing.T) {
 	require.NoError(t, err, "failed to read HTTP body")
 
 	// Finally, test the business requirement!
-	require.Contains(t, string(body), "<3", "does not respond with love?")
+	require.Contains(t, string(body), "Hello", "does not respond with Hello?")
 }
 
 // Requirement 2: The application must include a health-check end-point at /ping,
