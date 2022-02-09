@@ -7,7 +7,7 @@ WORKDIR /app
 COPY go.mod .
 COPY go.sum .
 RUN go mod tidy && go mod download
-
+RUN go get github.com/labstack/echo/v4 && go get github.com/labstack/echo/v4/middleware && go get github.com/thanhpk/randstr
 
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
