@@ -22,6 +22,4 @@ require (
 	gopkg.in/airbrake/gobrake.v2 v2.0.9 // indirect
 	gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2 // indirect
 	github.com/thanhpk/randstr latest //added for the randstr
-	github.com/labstack/echo/v4 latest
-	github.com/labstack/echo/v4/middleware latest
 )
