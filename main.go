@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/thanhpk/randstr"
 )
 
 func main() {
@@ -14,9 +15,14 @@ func main() {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	
+	greetings := os.Getenv("GREETINGS")
+	if greetings == "" {
+		greetings = randstr.String(16)
+	}
 
 	e.GET("/", func(c echo.Context) error {
-		return c.HTML(http.StatusOK, "Hello, Docker! <3")
+		return c.HTML(http.StatusOK, "Hello," + greetings)
 	})
 
 	e.GET("/ping", func(c echo.Context) error {
