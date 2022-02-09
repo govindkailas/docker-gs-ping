@@ -1,31 +1,31 @@
-FROM golang:1.16-alpine
+##
+## Build
+##
 
-# Set destination for COPY
+FROM golang:1.16-buster AS build
+
 WORKDIR /app
 
-# Download Go modules
 COPY go.mod .
 COPY go.sum .
-RUN go mod tidy && go mod download
-RUN go get github.com/labstack/echo/v4 && go get github.com/labstack/echo/v4/middleware && go get github.com/thanhpk/randstr
+RUN go mod download
 
-# Copy the source code. Note the slash at the end, as explained in
-# https://docs.docker.com/engine/reference/builder/#copy
 COPY *.go ./
 
-# Build
 RUN go build -o /docker-gs-ping
 
-# This is for documentation purposes only.
-# To actually open the port, runtime parameters
-# must be supplied to the docker command.
+##
+## Deploy
+##
+
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /
+
+COPY --from=build /docker-gs-ping /docker-gs-ping
+
 EXPOSE 8080
 
-# (Optional) environment variable that our dockerised
-# application can make use of. The value of environment
-# variables can also be set via parameters supplied
-# to the docker command on the command line.
-#ENV HTTP_PORT=8081
+USER nonroot:nonroot
 
-# Run
-CMD [ "/docker-gs-ping" ]
+ENTRYPOINT ["/docker-gs-ping"]

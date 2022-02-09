@@ -15,14 +15,14 @@ func main() {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	
+
 	greetings := os.Getenv("GREETINGS")
 	if greetings == "" {
 		greetings = randstr.String(16)
 	}
 
 	e.GET("/", func(c echo.Context) error {
-		return c.HTML(http.StatusOK, "Hello," + greetings)
+		return c.HTML(http.StatusOK, "Hello,"+greetings)
 	})
 
 	e.GET("/ping", func(c echo.Context) error {
