@@ -6,7 +6,8 @@ WORKDIR /app
 # Download Go modules
 COPY go.mod .
 COPY go.sum .
-RUN go mod download
+RUN go mod tidy && go mod download
+
 
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
